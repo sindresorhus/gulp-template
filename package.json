@@ -1,0 +1,38 @@
+{
+  "name": "gulp-template",
+  "version": "0.0.0",
+  "description": "Compile Lodash templates. Underscore too.",
+  "license": "MIT",
+  "repository": "sindresorhus/gulp-template",
+  "author": {
+    "name": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "http://sindresorhus.com"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "gulpplugin",
+    "lodash",
+    "underscore",
+    "template",
+    "compile",
+    "html",
+    "rendering"
+  ],
+  "dependencies": {
+    "event-stream": "~3.0.20",
+    "gulp-util": "~2.1.3",
+    "lodash.template": "~2.4.1"
+  },
+  "devDependencies": {
+    "mocha": "*"
+  }
+}
