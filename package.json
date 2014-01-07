@@ -29,7 +29,8 @@
   ],
   "dependencies": {
     "event-stream": "~3.0.20",
-    "lodash.template": "~2.4.1"
+    "lodash.template": "~2.4.1",
+    "optimist": "~0.6.0"
   },
   "devDependencies": {
     "gulp-util": "~2.1.3",
