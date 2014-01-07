@@ -63,6 +63,13 @@ Type: `Object`
 
 [Lo-Dash `_.template` options](http://lodash.com/docs#template).
 
+#### fromCli
+
+Type: `Boolean`
+
+Set this to true in order to pass data over the command line.
+
+`gulp template --headline="Gulp is great!" --text="Just a sentence to get started."`
 
 ## Notes
 
