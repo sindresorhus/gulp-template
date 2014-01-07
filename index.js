@@ -1,5 +1,6 @@
 'use strict';
 var es = require('event-stream');
+var gutil = require('gulp-util');
 var tpl = require('lodash.template');
 
 module.exports = function (data, options) {
