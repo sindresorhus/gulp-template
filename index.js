@@ -1,7 +1,7 @@
 'use strict';
 var gutil = require('gulp-util');
 var through = require('through2');
-var template = require('lodash').template;
+var template = require('lodash.template');
 
 module.exports = function (data, options) {
 	return through.obj(function (file, enc, cb) {
