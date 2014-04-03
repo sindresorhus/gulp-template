@@ -1,4 +1,4 @@
-# [gulp](https://github.com/wearefractal/gulp)-template [![Build Status](https://secure.travis-ci.org/sindresorhus/gulp-template.png?branch=master)](http://travis-ci.org/sindresorhus/gulp-template)
+# [gulp](http://gulpjs.com)-template [![Build Status](https://travis-ci.org/sindresorhus/gulp-template.svg?branch=master)](https://travis-ci.org/sindresorhus/gulp-template)
 
 > Compile [Lo-Dash templates](http://lodash.com/docs#template)
 
@@ -7,14 +7,12 @@
 
 ## Install
 
-Install with [npm](https://npmjs.org/package/gulp-template)
-
-```
-npm install --save-dev gulp-template
+```bash
+$ npm install --save-dev gulp-template
 ```
 
 
-## Example
+## Usage
 
 ### `src/greeting.html`
 
@@ -71,4 +69,4 @@ If you use [grunt](http://gruntjs.com) instead of gulp, but want to perform a si
 
 ## License
 
-MIT © [Sindre Sorhus](http://sindresorhus.com)
+[MIT](http://opensource.org/licenses/MIT) © [Sindre Sorhus](http://sindresorhus.com)
