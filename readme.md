@@ -27,7 +27,7 @@ var gulp = require('gulp');
 var template = require('gulp-template');
 
 gulp.task('default', function () {
-	gulp.src('src/greeting.html')
+	return gulp.src('src/greeting.html')
 		.pipe(template({name: 'Sindre'}))
 		.pipe(gulp.dest('dist'));
 });
