@@ -1,6 +1,6 @@
 {
   "name": "gulp-template",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "description": "Compile Lodash templates. Underscore too.",
   "license": "MIT",
   "repository": "sindresorhus/gulp-template",
