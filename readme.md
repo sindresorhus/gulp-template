@@ -2,7 +2,9 @@
 
 > Compile [Lo-Dash templates](http://lodash.com/docs#template)
 
-*Lo-Dash is like Underscore, but faster and better.*
+Lo-Dash is like Underscore, but faster and better.
+
+*Issues with the output should be reported on the Lo-Dash [issue tracker](https://github.com/lodash/lodash/issues).*
 
 
 ## Install
