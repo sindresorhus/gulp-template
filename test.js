@@ -8,8 +8,9 @@ it('should compile Lodash templates', function (cb) {
 
 	stream.on('data', function (data) {
 		assert.equal(data.contents.toString(), '<li>foo</li><li>bar</li>');
-		cb();
 	});
+
+	stream.on('end', cb);
 
 	stream.write(new gutil.File({
 		contents: new Buffer('<% _.forEach(people, function(name) { %><li><%- name %></li><% }); %>')

@@ -6,22 +6,20 @@ var template = require('lodash').template;
 module.exports = function (data, options) {
 	return through.obj(function (file, enc, cb) {
 		if (file.isNull()) {
-			this.push(file);
-			return cb();
+			cb(null, file);
+			return;
 		}
 
 		if (file.isStream()) {
-			this.emit('error', new gutil.PluginError('gulp-template', 'Streaming not supported'));
-			return cb();
+			cb(new gutil.PluginError('gulp-template', 'Streaming not supported'));
+			return;
 		}
 
 		try {
 			file.contents = new Buffer(template(file.contents.toString(), data, options));
+			cb(null, file);
 		} catch (err) {
-			this.emit('error', new gutil.PluginError('gulp-template', err, {fileName: file.path}));
+			cb(new gutil.PluginError('gulp-template', err, {fileName: file.path}));
 		}
-
-		this.push(file);
-		cb();
 	});
 };

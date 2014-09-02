@@ -9,7 +9,7 @@ Lo-Dash is like Underscore, but faster and better.
 
 ## Install
 
-```bash
+```sh
 $ npm install --save-dev gulp-template
 ```
 
@@ -46,16 +46,13 @@ gulp.task('default', function () {
 
 See the [Lo-Dash `_.template` docs](http://lodash.com/docs#template).
 
-
 ### template(data, options)
-
 
 #### data
 
 Type: `Object`
 
 The data object used to populate the text.
-
 
 #### options
 
@@ -71,4 +68,4 @@ If you use [grunt](http://gruntjs.com) instead of gulp, but want to perform a si
 
 ## License
 
-[MIT](http://opensource.org/licenses/MIT) © [Sindre Sorhus](http://sindresorhus.com)
+MIT © [Sindre Sorhus](http://sindresorhus.com)
