@@ -1,7 +1,7 @@
 'use strict';
 var assert = require('assert');
 var gutil = require('gulp-util');
-var template = require('./index');
+var template = require('./');
 
 it('should compile Lodash templates', function (cb) {
 	var stream = template({people: ['foo', 'bar']});
