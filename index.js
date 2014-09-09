@@ -1,7 +1,8 @@
 'use strict';
 var gutil = require('gulp-util');
 var through = require('through2');
-var template = require('lodash').template;
+var _ = require('lodash');
+var template = _.template;
 
 module.exports = function (data, options) {
 	return through.obj(function (file, enc, cb) {
@@ -13,6 +14,10 @@ module.exports = function (data, options) {
 		if (file.isStream()) {
 			cb(new gutil.PluginError('gulp-template', 'Streaming not supported'));
 			return;
+		}
+
+		if (file.data) {
+			data = _.extend(file.data, data); 
 		}
 
 		try {
