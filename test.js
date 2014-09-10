@@ -41,6 +41,34 @@ it('should support data via gulp-data', function (cb) {
 	stream.end();
 });
 
+it('should support Lo-Dash options with gulp-data', function (cb) {
+
+	var options = {
+		variable: 'data',
+		imports: {
+			heading: 'people'
+		}
+	};
+
+	var stream = data(function() {
+		return { people: ['foo', 'bar'] };
+	});
+
+	stream.pipe(template(null,options));
+
+	stream.on('data', function (data) {
+		assert.equal(data.contents.toString(), '<h1>people</h1><li>foo</li><li>bar</li>');
+	});
+
+	stream.on('end', cb);
+
+	stream.write(new gutil.File({
+		contents: new Buffer('<h1><%= heading %></h1><% _.forEach(data.people, function(name) { %><li><%- name %></li><% }); %>')
+	}));
+
+	stream.end();
+});
+
 it('should extend gulp-data and data parameter', function (cb) {
 
 	var stream = data(function() {
