@@ -33,6 +33,7 @@
     "through2": "^0.6.1"
   },
   "devDependencies": {
+    "gulp-data": "^1.0.2",
     "mocha": "*"
   }
 }

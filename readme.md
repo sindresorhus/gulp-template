@@ -35,6 +35,23 @@ gulp.task('default', function () {
 });
 ```
 
+You can alternatively use [gulp-data](https://github.com/colynb/gulp-data) to inject the data:
+
+```js
+var gulp = require('gulp');
+var template = require('gulp-template');
+var data = require('gulp-data');
+
+gulp.task('default', function () {
+	return gulp.src('src/greeting.html')
+		.pipe(data(function () {
+			return {name: 'Sindre'};
+		}))
+		.pipe(template())
+		.pipe(gulp.dest('dist'));
+});
+```
+
 ### `dist/greeting.html`
 
 ```html
