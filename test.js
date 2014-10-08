@@ -94,3 +94,19 @@ it('should extend gulp-data and data parameter', function (cb) {
 
 	stream.end();
 });
+
+it('should work with no data supplied', function (cb) {
+	var stream = template();
+
+	stream.on('data', function (data) {
+		assert.equal(data.contents.toString(), '');
+	});
+
+	stream.on('end', cb);
+
+	stream.write(new gutil.File({
+		contents: new Buffer('')
+	}));
+
+	stream.end();
+});
