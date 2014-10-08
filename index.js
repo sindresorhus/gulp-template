@@ -22,9 +22,11 @@ module.exports = function (data, options) {
 
 		try {
 			file.contents = new Buffer(template(file.contents.toString(), data || {}, options));
-			cb(null, file);
+			this.push(file);
 		} catch (err) {
-			cb(new gutil.PluginError('gulp-template', err, {fileName: file.path}));
+			this.emit('error', new gutil.PluginError('gulp-template', err, {fileName: file.path}));
 		}
+
+		cb();
 	});
 };
