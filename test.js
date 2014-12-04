@@ -110,3 +110,19 @@ it('should work with no data supplied', function (cb) {
 
 	stream.end();
 });
+
+it('should precompile if data is null', function (cb) {
+	var stream = template(null);
+
+	stream.on('data', function (data) {
+		assert.ok(data.contents.toString().indexOf('function (obj)') === 0);
+	});
+
+	stream.on('end', cb);
+
+	stream.write(new gutil.File({
+		contents: new Buffer('<h1><%= heading %></h1>')
+	}));
+
+	stream.end();
+});
