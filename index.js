@@ -20,8 +20,12 @@ module.exports = function (data, options) {
 			data = _.extend(file.data, data);
 		}
 
+		if (!data && data !== null) {
+			data = {};
+		}
+
 		try {
-			file.contents = new Buffer(template(file.contents.toString(), data || {}, options));
+			file.contents = new Buffer(template(file.contents.toString(), data, options).toString());
 			this.push(file);
 		} catch (err) {
 			this.emit('error', new gutil.PluginError('gulp-template', err, {fileName: file.path}));
