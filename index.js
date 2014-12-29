@@ -17,7 +17,7 @@ module.exports = function (data, options) {
 		}
 
 		if (file.data) {
-			data = _.extend(file.data, data);
+			data = _.merge(file.data, data);
 		}
 
 		try {
