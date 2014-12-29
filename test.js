@@ -71,25 +71,27 @@ it('should support Lo-Dash options with gulp-data', function (cb) {
 	stream.end();
 });
 
-it('should extend gulp-data and data parameter', function (cb) {
+it('should merge gulp-data and data parameter', function (cb) {
 	var stream = data(function () {
 		return {
-			people: ['foo', 'bar']
+			people: ['foo', 'bar'],
+			nested: { 'a' : 'one', 'b' : 'two' }
 		};
 	});
 
 	stream.pipe(template({
-		heading: 'people'
+		heading: 'people',
+		nested: { 'a': 'three', 'c' : 'four' }
 	}));
 
 	stream.on('data', function (data) {
-		assert.equal(data.contents.toString(), '<h1>people</h1><li>foo</li><li>bar</li>');
+		assert.equal(data.contents.toString(), '<h1>people</h1><li>foo</li><li>bar</li>three,two,four');
 	});
 
 	stream.on('end', cb);
 
 	stream.write(new gutil.File({
-		contents: new Buffer('<h1><%= heading %></h1><% _.forEach(people, function (name) { %><li><%- name %></li><% }); %>')
+		contents: new Buffer('<h1><%= heading %></h1><% _.forEach(people, function (name) { %><li><%- name %></li><% }); %><%= nested.a %>,<%= nested.b %>,<%= nested.c %>')
 	}));
 
 	stream.end();
