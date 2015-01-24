@@ -78,6 +78,15 @@ Type: `Object`
 [Lo-Dash `_.template` options](http://lodash.com/docs#template).
 
 
+### template.precompile(options)
+
+#### options
+
+Type: `Object`
+
+[Lo-Dash `_.template` options](http://lodash.com/docs#template).
+
+
 ## Notes
 
 If you use [grunt](http://gruntjs.com) instead of gulp, but want to perform a similar task, use [grunt-template](https://github.com/mathiasbynens/grunt-template).
