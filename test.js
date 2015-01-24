@@ -112,3 +112,39 @@ it('should work with no data supplied', function (cb) {
 
 	stream.end();
 });
+
+it('should precompile Lodash templates', function (cb) {
+	var stream = template.precompile();
+
+	stream.on('data', function (data) {
+		assert.ok(data.contents.toString().indexOf('function (obj)') === 0);
+	});
+
+	stream.on('end', cb);
+
+	stream.write(new gutil.File({
+		contents: new Buffer('<h1><%= heading %></h1>')
+	}));
+
+	stream.end();
+});
+
+it('should support Lo-Dash options when precompiling', function (cb) {
+	var options = {
+		variable: 'data',
+	};
+
+	var stream = template.precompile(options);
+
+	stream.on('data', function (data) {
+		assert.ok(data.contents.toString().indexOf('function (data)') === 0);
+	});
+
+	stream.on('end', cb);
+
+	stream.write(new gutil.File({
+		contents: new Buffer('<h1><%= heading %></h1>')
+	}));
+
+	stream.end();
+});

@@ -30,3 +30,26 @@ module.exports = function (data, options) {
 		cb();
 	});
 };
+
+module.exports.precompile = function (options) {
+	return through.obj(function (file, enc, cb) {
+		if (file.isNull()) {
+			cb(null, file);
+			return;
+		}
+
+		if (file.isStream()) {
+			cb(new gutil.PluginError('gulp-template', 'Streaming not supported'));
+			return;
+		}
+
+		try {
+			file.contents = new Buffer(template(file.contents.toString(), null, options).toString());
+			this.push(file);
+		} catch (err) {
+			this.emit('error', new gutil.PluginError('gulp-template', err, {fileName: file.path}));
+		}
+
+		cb();
+	});
+};
