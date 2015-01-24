@@ -131,7 +131,7 @@ it('should precompile Lodash templates', function (cb) {
 
 it('should support Lo-Dash options when precompiling', function (cb) {
 	var options = {
-		variable: 'data',
+		variable: 'data'
 	};
 
 	var stream = template.precompile(options);

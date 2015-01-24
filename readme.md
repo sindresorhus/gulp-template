@@ -1,15 +1,13 @@
-# [gulp](http://gulpjs.com)-template [![Build Status](https://travis-ci.org/sindresorhus/gulp-template.svg?branch=master)](https://travis-ci.org/sindresorhus/gulp-template)
+# gulp-template [![Build Status](https://travis-ci.org/sindresorhus/gulp-template.svg?branch=master)](https://travis-ci.org/sindresorhus/gulp-template)
 
-> Compile [Lo-Dash templates](http://lodash.com/docs#template)
-
-Lo-Dash is like Underscore, but faster and better.
+> Render/precompile [Lo-Dash/Underscore templates](http://lodash.com/docs#template)
 
 *Issues with the output should be reported on the Lo-Dash [issue tracker](https://github.com/lodash/lodash/issues).*
 
 
 ## Install
 
-```sh
+```
 $ npm install --save-dev gulp-template
 ```
 
@@ -61,24 +59,19 @@ gulp.task('default', function () {
 
 ## API
 
-See the [Lo-Dash `_.template` docs](http://lodash.com/docs#template).
+### template(data, [options])
 
-### template(data, options)
+Render a template using the provided `data`.
+
+### template.precompile([options])
+
+Precompile a template for rendering dynamically at a later time.
 
 #### data
 
 Type: `Object`
 
 The data object used to populate the text.
-
-#### options
-
-Type: `Object`
-
-[Lo-Dash `_.template` options](http://lodash.com/docs#template).
-
-
-### template.precompile(options)
 
 #### options
 

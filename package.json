@@ -1,13 +1,13 @@
 {
   "name": "gulp-template",
   "version": "2.0.0",
-  "description": "Compile Lodash templates. Underscore too.",
+  "description": "Render/precompile Lo-Dash/Underscore templates",
   "license": "MIT",
   "repository": "sindresorhus/gulp-template",
   "author": {
     "name": "Sindre Sorhus",
     "email": "sindresorhus@gmail.com",
-    "url": "http://sindresorhus.com"
+    "url": "sindresorhus.com"
   },
   "engines": {
     "node": ">=0.10.0"
@@ -25,7 +25,9 @@
     "template",
     "compile",
     "html",
-    "rendering"
+    "render",
+    "rendering",
+    "precompile"
   ],
   "dependencies": {
     "gulp-util": "^3.0.0",
