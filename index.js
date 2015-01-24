@@ -4,7 +4,7 @@ var through = require('through2');
 var _ = require('lodash');
 var template = _.template;
 
-module.exports = function (data, options) {
+function compile(options, getData) {
 	return through.obj(function (file, enc, cb) {
 		if (file.isNull()) {
 			cb(null, file);
@@ -16,12 +16,10 @@ module.exports = function (data, options) {
 			return;
 		}
 
-		if (file.data) {
-			data = _.merge(file.data, data);
-		}
+		var data = getData(file);
 
 		try {
-			file.contents = new Buffer(template(file.contents.toString(), data || {}, options));
+			file.contents = new Buffer(template(file.contents.toString(), data, options).toString());
 			this.push(file);
 		} catch (err) {
 			this.emit('error', new gutil.PluginError('gulp-template', err, {fileName: file.path}));
@@ -29,27 +27,20 @@ module.exports = function (data, options) {
 
 		cb();
 	});
+}
+
+module.exports = function (data, options) {
+	return compile(options, function(file) {
+		if (file.data) {
+			data = _.merge(file.data, data);
+		}
+
+		return data || {};
+	});
 };
 
 module.exports.precompile = function (options) {
-	return through.obj(function (file, enc, cb) {
-		if (file.isNull()) {
-			cb(null, file);
-			return;
-		}
-
-		if (file.isStream()) {
-			cb(new gutil.PluginError('gulp-template', 'Streaming not supported'));
-			return;
-		}
-
-		try {
-			file.contents = new Buffer(template(file.contents.toString(), null, options).toString());
-			this.push(file);
-		} catch (err) {
-			this.emit('error', new gutil.PluginError('gulp-template', err, {fileName: file.path}));
-		}
-
-		cb();
+	return compile(options, function() {
+		return null;
 	});
 };
