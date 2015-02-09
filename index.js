@@ -30,12 +30,8 @@ function compile(options, getData) {
 }
 
 module.exports = function (data, options) {
-	return compile(options, function(file) {
-		if (file.data) {
-			data = _.merge(file.data, data);
-		}
-
-		return data || {};
+	return compile(options, function (file) {
+		return _.merge({}, file.data, data);
 	});
 };
 
