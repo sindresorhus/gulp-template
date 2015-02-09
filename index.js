@@ -31,13 +31,7 @@ function compile(options, getData) {
 
 module.exports = function (data, options) {
 	return compile(options, function (file) {
-		return function (data) {
-			if (file.data) {
-				data = _.merge({}, file.data, data);
-			}
-
-			return data || {};
-		}(data);
+		return _.merge({}, file.data, data);
 	});
 };
 
