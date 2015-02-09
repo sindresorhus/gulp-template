@@ -4,7 +4,7 @@ var through = require('through2');
 var _ = require('lodash');
 var template = _.template;
 
-function compile(options, getData) {
+function compile(options, data, render) {
 	return through.obj(function (file, enc, cb) {
 		if (file.isNull()) {
 			cb(null, file);
@@ -16,10 +16,9 @@ function compile(options, getData) {
 			return;
 		}
 
-		var data = getData(file);
-
 		try {
-			file.contents = new Buffer(template(file.contents.toString(), data, options).toString());
+			var tpl = template(file.contents.toString(), options);
+			file.contents = new Buffer(render ? tpl(_.merge({}, file.data, data)) : tpl.toString());
 			this.push(file);
 		} catch (err) {
 			this.emit('error', new gutil.PluginError('gulp-template', err, {fileName: file.path}));
@@ -30,13 +29,9 @@ function compile(options, getData) {
 }
 
 module.exports = function (data, options) {
-	return compile(options, function (file) {
-		return _.merge({}, file.data, data);
-	});
+	return compile(options, data, true);
 };
 
 module.exports.precompile = function (options) {
-	return compile(options, function() {
-		return null;
-	});
+	return compile(options);
 };
