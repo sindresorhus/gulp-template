@@ -1,4 +1,5 @@
 'use strict';
+/* eslint-env mocha */
 var assert = require('assert');
 var gutil = require('gulp-util');
 var data = require('gulp-data');
@@ -99,13 +100,19 @@ it('should merge gulp-data and data parameter', function (cb) {
 	var stream = data(function () {
 		return {
 			people: ['foo', 'bar'],
-			nested: { 'a' : 'one', 'b' : 'two' }
+			nested: {
+				a: 'one',
+				b: 'two'
+			}
 		};
 	});
 
 	stream.pipe(template({
 		heading: 'people',
-		nested: { 'a': 'three', 'c' : 'four' }
+		nested: {
+			a: 'three',
+			c: 'four'
+		}
 	}));
 
 	stream.on('data', function (data) {

@@ -13,7 +13,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "xo && mocha"
   },
   "files": [
     "index.js"
@@ -31,11 +31,12 @@
   ],
   "dependencies": {
     "gulp-util": "^3.0.0",
-    "lodash": "^3.1.0",
+    "lodash": "^4.8.2",
     "through2": "^2.0.0"
   },
   "devDependencies": {
     "gulp-data": "^1.0.2",
-    "mocha": "*"
+    "mocha": "*",
+    "xo": "*"
   }
 }

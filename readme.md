@@ -23,31 +23,29 @@ $ npm install --save-dev gulp-template
 ### `gulpfile.js`
 
 ```js
-var gulp = require('gulp');
-var template = require('gulp-template');
+const gulp = require('gulp');
+const template = require('gulp-template');
 
-gulp.task('default', function () {
-	return gulp.src('src/greeting.html')
+gulp.task('default', () =>
+	gulp.src('src/greeting.html')
 		.pipe(template({name: 'Sindre'}))
-		.pipe(gulp.dest('dist'));
-});
+		.pipe(gulp.dest('dist'))
+);
 ```
 
 You can alternatively use [gulp-data](https://github.com/colynb/gulp-data) to inject the data:
 
 ```js
-var gulp = require('gulp');
-var template = require('gulp-template');
-var data = require('gulp-data');
+const gulp = require('gulp');
+const template = require('gulp-template');
+const data = require('gulp-data');
 
-gulp.task('default', function () {
-	return gulp.src('src/greeting.html')
-		.pipe(data(function () {
-			return {name: 'Sindre'};
-		}))
+gulp.task('default', () =>
+	gulp.src('src/greeting.html')
+		.pipe(data(() => ({name: 'Sindre'})))
 		.pipe(template())
-		.pipe(gulp.dest('dist'));
-});
+		.pipe(gulp.dest('dist'))
+);
 ```
 
 ### `dist/greeting.html`
@@ -69,22 +67,22 @@ Precompile a template for rendering dynamically at a later time.
 
 #### data
 
-Type: `Object`
+Type: `object`
 
-The data object used to populate the text.
+Data object used to populate the text.
 
 #### options
 
-Type: `Object`
+Type: `object`
 
 [Lo-Dash `_.template` options](http://lodash.com/docs#template).
 
 
-## Notes
+## Related
 
-If you use [grunt](http://gruntjs.com) instead of gulp, but want to perform a similar task, use [grunt-template](https://github.com/mathiasbynens/grunt-template).
+- [grunt-template](https://github.com/mathiasbynens/grunt-template) - Grunt version
 
 
 ## License
 
-MIT © [Sindre Sorhus](http://sindresorhus.com)
+MIT © [Sindre Sorhus](https://sindresorhus.com)
