@@ -15,7 +15,7 @@ it('should compile Lodash templates', function (cb) {
 	stream.on('end', cb);
 
 	stream.write(new gutil.File({
-		contents: new Buffer('<% _.forEach(people, function (name) { %><li><%- name %></li><% }); %>')
+		contents: new Buffer('<% people.forEach(function (name) { %><li><%- name %></li><% }); %>')
 	}));
 
 	stream.end();
@@ -122,7 +122,7 @@ it('should merge gulp-data and data parameter', function (cb) {
 	stream.on('end', cb);
 
 	stream.write(new gutil.File({
-		contents: new Buffer('<h1><%= heading %></h1><% _.forEach(people, function (name) { %><li><%- name %></li><% }); %><%= nested.a %>,<%= nested.b %>,<%= nested.c %>')
+		contents: new Buffer('<h1><%= heading %></h1><% people.forEach(function (name) { %><li><%- name %></li><% }); %><%= nested.a %>,<%= nested.b %>,<%= nested.c %>')
 	}));
 
 	stream.end();
