@@ -30,8 +30,10 @@
     "precompile"
   ],
   "dependencies": {
+    "fs": "0.0.2",
     "gulp-util": "^3.0.0",
     "lodash": "^4.8.2",
+    "path": "^0.12.7",
     "through2": "^2.0.0"
   },
   "devDependencies": {
