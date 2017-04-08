@@ -1,6 +1,6 @@
 {
-  "name": "gulp-template",
-  "version": "4.0.0",
+  "name": "gulp-templatex",
+  "version": "4.0.1",
   "description": "Render/precompile Lo-Dash/Underscore templates",
   "license": "MIT",
   "repository": "sindresorhus/gulp-template",
