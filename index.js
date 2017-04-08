@@ -1,14 +1,18 @@
 'use strict';
 let fs = require('fs');
 let path = require('path');
-var gutil = require('gulp-util');
-var through = require('through2');
-var _ = require('lodash');
-var template = _.template;
+let gutil = require('gulp-util');
+let through = require('through2');
+let _ = require('lodash');
+let template = _.template;
 
-var __include;
+let __include;
 
 function compile(options, data, render) {
+  function include(p, opts) {
+    opts = opts || data;
+    return template(fs.readFileSync(path.join(options.dirname || __dirname, p), 'utf8'))(opts);
+  }
   return through.obj(function (file, enc, cb) {
     if (file.isNull()) {
       cb(null, file);
@@ -21,11 +25,8 @@ function compile(options, data, render) {
     }
 
     try {
-      var tpl = template(file.contents.toString(), options);
-      data[__include] = function(p, opts) {
-        opts = opts || data;
-        return template(fs.readFileSync(path.join(options.dirname || __dirname, p), 'utf8'))(opts);
-      };
+      let tpl = template(file.contents.toString(), options);
+      data[__include] = include;
       file.contents = new Buffer(render ? tpl(_.merge({}, file.data, data)) : tpl.toString());
       delete(data[__include]);
       this.push(file);
