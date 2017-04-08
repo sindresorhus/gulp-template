@@ -33,6 +33,26 @@ gulp.task('default', () =>
 );
 ```
 
+### `Include files`
+```
+gulp.task('default', () =>
+	gulp.src('src/gre.html')
+		.pipe(template({name: 'Sindre'}, {
+      dirname: __dirname, // specify the root dir
+      __include: '__include' // optional, the include function's name
+    }))
+		.pipe(gulp.dest('dist'))
+);
+
+// ./gre.html
+<%=name%>
+<%=__include('./html/component.html')%>
+
+// ./html/component.html
+<%=name%>
+<%=__include('./html/sub_component.html')%>
+```
+
 You can alternatively use [gulp-data](https://github.com/colynb/gulp-data) to inject the data:
 
 ```js
