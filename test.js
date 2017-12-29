@@ -1,7 +1,7 @@
 'use strict';
 /* eslint-env mocha */
 var assert = require('assert');
-var gutil = require('gulp-util');
+var Vinyl = require('vinyl');
 var data = require('gulp-data');
 var template = require('./');
 
@@ -14,7 +14,7 @@ it('should compile Lodash templates', function (cb) {
 
 	stream.on('end', cb);
 
-	stream.write(new gutil.File({
+	stream.write(new Vinyl({
 		contents: new Buffer('<% _.forEach(people, function (name) { %><li><%- name %></li><% }); %>')
 	}));
 
@@ -42,12 +42,12 @@ it('should support data via gulp-data', function (cb) {
 		cb();
 	});
 
-	stream.write(new gutil.File({
+	stream.write(new Vinyl({
 		path: 'foo.txt',
 		contents: new Buffer('<dt><%- dt %></dt><dd><%- dd %></dd>')
 	}));
 
-	stream.write(new gutil.File({
+	stream.write(new Vinyl({
 		path: 'bar.txt',
 		contents: new Buffer('<dt><%- dt %></dt><dd><%- dd %></dd>')
 	}));
@@ -83,12 +83,12 @@ it('should support Lo-Dash options with gulp-data', function (cb) {
 		cb();
 	});
 
-	stream.write(new gutil.File({
+	stream.write(new Vinyl({
 		path: 'foo.txt',
 		contents: new Buffer('<dt><%- dt %></dt><dd><%- data.dd %></dd>')
 	}));
 
-	stream.write(new gutil.File({
+	stream.write(new Vinyl({
 		path: 'bar.txt',
 		contents: new Buffer('<dt><%- dt %></dt><dd><%- data.dd %></dd>')
 	}));
@@ -121,7 +121,7 @@ it('should merge gulp-data and data parameter', function (cb) {
 
 	stream.on('end', cb);
 
-	stream.write(new gutil.File({
+	stream.write(new Vinyl({
 		contents: new Buffer('<h1><%= heading %></h1><% _.forEach(people, function (name) { %><li><%- name %></li><% }); %><%= nested.a %>,<%= nested.b %>,<%= nested.c %>')
 	}));
 
@@ -159,7 +159,7 @@ it('should not alter gulp-data or data parameter', function (cb) {
 		cb();
 	});
 
-	stream.write(new gutil.File({
+	stream.write(new Vinyl({
 		contents: new Buffer('foo')
 	}));
 
@@ -175,7 +175,7 @@ it('should work with no data supplied', function (cb) {
 
 	stream.on('end', cb);
 
-	stream.write(new gutil.File({
+	stream.write(new Vinyl({
 		contents: new Buffer('')
 	}));
 
@@ -191,7 +191,7 @@ it('should precompile Lodash templates', function (cb) {
 
 	stream.on('end', cb);
 
-	stream.write(new gutil.File({
+	stream.write(new Vinyl({
 		contents: new Buffer('<h1><%= heading %></h1>')
 	}));
 
@@ -211,7 +211,7 @@ it('should support Lo-Dash options when precompiling', function (cb) {
 
 	stream.on('end', cb);
 
-	stream.write(new gutil.File({
+	stream.write(new Vinyl({
 		contents: new Buffer('<h1><%= heading %></h1>')
 	}));
 
