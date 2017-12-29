@@ -1,8 +1,10 @@
 'use strict';
-var PluginError = require('plugin-error');
-var through = require('through2');
-var _ = require('lodash');
-var template = _.template;
+const PluginError = require('plugin-error');
+const through = require('through2');
+const _ = require('lodash');
+const Buffer = require('safe-buffer').Buffer;
+
+const template = _.template;
 
 function compile(options, data, render) {
 	return through.obj(function (file, enc, cb) {
@@ -17,8 +19,8 @@ function compile(options, data, render) {
 		}
 
 		try {
-			var tpl = template(file.contents.toString(), options);
-			file.contents = new Buffer(render ? tpl(_.merge({}, file.data, data)) : tpl.toString());
+			const tpl = template(file.contents.toString(), options);
+			file.contents = Buffer.from(render ? tpl(_.merge({}, file.data, data)) : tpl.toString());
 			this.push(file);
 		} catch (err) {
 			this.emit('error', new PluginError('gulp-template', err, {fileName: file.path}));
@@ -28,10 +30,5 @@ function compile(options, data, render) {
 	});
 }
 
-module.exports = function (data, options) {
-	return compile(options, data, true);
-};
-
-module.exports.precompile = function (options) {
-	return compile(options);
-};
+module.exports = (data, options) => compile(options, data, true);
+module.exports.precompile = options => compile(options);

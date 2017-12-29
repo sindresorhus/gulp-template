@@ -1,30 +1,30 @@
 'use strict';
 /* eslint-env mocha */
-var assert = require('assert');
-var Vinyl = require('vinyl');
-var data = require('gulp-data');
-var template = require('./');
+const assert = require('assert');
+const Vinyl = require('vinyl');
+const data = require('gulp-data');
+const template = require('.');
 
-it('should compile Lodash templates', function (cb) {
-	var stream = template({people: ['foo', 'bar']});
+it('should compile Lodash templates', cb => {
+	const stream = template({people: ['foo', 'bar']});
 
-	stream.on('data', function (data) {
+	stream.on('data', data => {
 		assert.equal(data.contents.toString(), '<li>foo</li><li>bar</li>');
 	});
 
 	stream.on('end', cb);
 
 	stream.write(new Vinyl({
-		contents: new Buffer('<% _.forEach(people, function (name) { %><li><%- name %></li><% }); %>')
+		contents: Buffer.from('<% _.forEach(people, function (name) { %><li><%- name %></li><% }); %>')
 	}));
 
 	stream.end();
 });
 
-it('should support data via gulp-data', function (cb) {
-	var dl = [];
+it('should support data via gulp-data', cb => {
+	const dl = [];
 
-	var stream = data(function (file) {
+	const stream = data(file => {
 		return {
 			dd: file.path
 		};
@@ -32,40 +32,40 @@ it('should support data via gulp-data', function (cb) {
 
 	stream.pipe(template({dt: 'path'}));
 
-	stream.on('data', function (chunk) {
+	stream.on('data', chunk => {
 		dl.push(chunk.contents.toString());
 	});
 
-	stream.on('end', function () {
-		var expected = '<dt>path</dt><dd>bar.txt</dd><dt>path</dt><dd>foo.txt</dd>';
+	stream.on('end', () => {
+		const expected = '<dt>path</dt><dd>bar.txt</dd><dt>path</dt><dd>foo.txt</dd>';
 		assert.equal(dl.sort().join(''), expected);
 		cb();
 	});
 
 	stream.write(new Vinyl({
 		path: 'foo.txt',
-		contents: new Buffer('<dt><%- dt %></dt><dd><%- dd %></dd>')
+		contents: Buffer.from('<dt><%- dt %></dt><dd><%- dd %></dd>')
 	}));
 
 	stream.write(new Vinyl({
 		path: 'bar.txt',
-		contents: new Buffer('<dt><%- dt %></dt><dd><%- dd %></dd>')
+		contents: Buffer.from('<dt><%- dt %></dt><dd><%- dd %></dd>')
 	}));
 
 	stream.end();
 });
 
-it('should support Lo-Dash options with gulp-data', function (cb) {
-	var options = {
+it('should support Lo-Dash options with gulp-data', cb => {
+	const options = {
 		variable: 'data',
 		imports: {
 			dt: 'path'
 		}
 	};
 
-	var dl = [];
+	const dl = [];
 
-	var stream = data(function (file) {
+	const stream = data(file => {
 		return {
 			dd: file.path
 		};
@@ -73,31 +73,31 @@ it('should support Lo-Dash options with gulp-data', function (cb) {
 
 	stream.pipe(template(null, options));
 
-	stream.on('data', function (chunk) {
+	stream.on('data', chunk => {
 		dl.push(chunk.contents.toString());
 	});
 
-	stream.on('end', function () {
-		var expected = '<dt>path</dt><dd>bar.txt</dd><dt>path</dt><dd>foo.txt</dd>';
+	stream.on('end', () => {
+		const expected = '<dt>path</dt><dd>bar.txt</dd><dt>path</dt><dd>foo.txt</dd>';
 		assert.equal(dl.sort().join(''), expected);
 		cb();
 	});
 
 	stream.write(new Vinyl({
 		path: 'foo.txt',
-		contents: new Buffer('<dt><%- dt %></dt><dd><%- data.dd %></dd>')
+		contents: Buffer.from('<dt><%- dt %></dt><dd><%- data.dd %></dd>')
 	}));
 
 	stream.write(new Vinyl({
 		path: 'bar.txt',
-		contents: new Buffer('<dt><%- dt %></dt><dd><%- data.dd %></dd>')
+		contents: Buffer.from('<dt><%- dt %></dt><dd><%- data.dd %></dd>')
 	}));
 
 	stream.end();
 });
 
-it('should merge gulp-data and data parameter', function (cb) {
-	var stream = data(function () {
+it('should merge gulp-data and data parameter', cb => {
+	const stream = data(() => {
 		return {
 			people: ['foo', 'bar'],
 			nested: {
@@ -115,29 +115,29 @@ it('should merge gulp-data and data parameter', function (cb) {
 		}
 	}));
 
-	stream.on('data', function (data) {
+	stream.on('data', data => {
 		assert.equal(data.contents.toString(), '<h1>people</h1><li>foo</li><li>bar</li>three,two,four');
 	});
 
 	stream.on('end', cb);
 
 	stream.write(new Vinyl({
-		contents: new Buffer('<h1><%= heading %></h1><% _.forEach(people, function (name) { %><li><%- name %></li><% }); %><%= nested.a %>,<%= nested.b %>,<%= nested.c %>')
+		contents: Buffer.from('<h1><%= heading %></h1><% _.forEach(people, function (name) { %><li><%- name %></li><% }); %><%= nested.a %>,<%= nested.b %>,<%= nested.c %>')
 	}));
 
 	stream.end();
 });
 
-it('should not alter gulp-data or data parameter', function (cb) {
-	var chunks = [];
+it('should not alter gulp-data or data parameter', cb => {
+	const chunks = [];
 
-	var stream = data(function (file) {
+	const stream = data(file => {
 		return {
 			contents: file.contents.toString()
 		};
 	});
 
-	var parameter = {
+	const parameter = {
 		foo: 'foo',
 		bar: 'bar',
 		foobar: ['foo', 'bar']
@@ -145,11 +145,11 @@ it('should not alter gulp-data or data parameter', function (cb) {
 
 	stream.pipe(template(parameter));
 
-	stream.on('data', function (chunk) {
+	stream.on('data', chunk => {
 		chunks.push(chunk);
 	});
 
-	stream.on('end', function () {
+	stream.on('end', () => {
 		assert.deepEqual(chunks[0].data, {contents: 'foo'});
 		assert.deepEqual(parameter, {
 			foo: 'foo',
@@ -160,59 +160,59 @@ it('should not alter gulp-data or data parameter', function (cb) {
 	});
 
 	stream.write(new Vinyl({
-		contents: new Buffer('foo')
+		contents: Buffer.from('foo')
 	}));
 
 	stream.end();
 });
 
-it('should work with no data supplied', function (cb) {
-	var stream = template();
+it('should work with no data supplied', cb => {
+	const stream = template();
 
-	stream.on('data', function (data) {
+	stream.on('data', data => {
 		assert.equal(data.contents.toString(), '');
 	});
 
 	stream.on('end', cb);
 
 	stream.write(new Vinyl({
-		contents: new Buffer('')
+		contents: Buffer.from('')
 	}));
 
 	stream.end();
 });
 
-it('should precompile Lodash templates', function (cb) {
-	var stream = template.precompile();
+it('should precompile Lodash templates', cb => {
+	const stream = template.precompile();
 
-	stream.on('data', function (data) {
+	stream.on('data', data => {
 		assert.ok(data.contents.toString().indexOf('function (obj)') === 0);
 	});
 
 	stream.on('end', cb);
 
 	stream.write(new Vinyl({
-		contents: new Buffer('<h1><%= heading %></h1>')
+		contents: Buffer.from('<h1><%= heading %></h1>')
 	}));
 
 	stream.end();
 });
 
-it('should support Lo-Dash options when precompiling', function (cb) {
-	var options = {
+it('should support Lo-Dash options when precompiling', cb => {
+	const options = {
 		variable: 'data'
 	};
 
-	var stream = template.precompile(options);
+	const stream = template.precompile(options);
 
-	stream.on('data', function (data) {
+	stream.on('data', data => {
 		assert.ok(data.contents.toString().indexOf('function (data)') === 0);
 	});
 
 	stream.on('end', cb);
 
 	stream.write(new Vinyl({
-		contents: new Buffer('<h1><%= heading %></h1>')
+		contents: Buffer.from('<h1><%= heading %></h1>')
 	}));
 
 	stream.end();

@@ -1,8 +1,8 @@
 # gulp-template [![Build Status](https://travis-ci.org/sindresorhus/gulp-template.svg?branch=master)](https://travis-ci.org/sindresorhus/gulp-template)
 
-> Render/precompile [Lo-Dash/Underscore templates](http://lodash.com/docs#template)
+> Render/precompile [Lodash/Underscore templates](http://lodash.com/docs#template)
 
-*Issues with the output should be reported on the Lo-Dash [issue tracker](https://github.com/lodash/lodash/issues).*
+*Issues with the output should be reported on the Lodash [issue tracker](https://github.com/lodash/lodash/issues).*
 
 
 ## Install
@@ -67,15 +67,15 @@ Precompile a template for rendering dynamically at a later time.
 
 #### data
 
-Type: `object`
+Type: `Object`
 
 Data object used to populate the text.
 
 #### options
 
-Type: `object`
+Type: `Object`
 
-[Lo-Dash `_.template` options](http://lodash.com/docs#template).
+[Lodash `_.template` options](http://lodash.com/docs#template).
 
 
 ## Related
