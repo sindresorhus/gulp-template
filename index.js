@@ -1,5 +1,5 @@
 'use strict';
-var gutil = require('gulp-util');
+var PluginError = require('plugin-error');
 var through = require('through2');
 var _ = require('lodash');
 var template = _.template;
@@ -12,7 +12,7 @@ function compile(options, data, render) {
 		}
 
 		if (file.isStream()) {
-			cb(new gutil.PluginError('gulp-template', 'Streaming not supported'));
+			cb(new PluginError('gulp-template', 'Streaming not supported'));
 			return;
 		}
 
@@ -21,7 +21,7 @@ function compile(options, data, render) {
 			file.contents = new Buffer(render ? tpl(_.merge({}, file.data, data)) : tpl.toString());
 			this.push(file);
 		} catch (err) {
-			this.emit('error', new gutil.PluginError('gulp-template', err, {fileName: file.path}));
+			this.emit('error', new PluginError('gulp-template', err, {fileName: file.path}));
 		}
 
 		cb();
