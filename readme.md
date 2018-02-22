@@ -54,6 +54,37 @@ gulp.task('default', () =>
 <h1>Hello Sindre</h1>
 ```
 
+You can also provide your own [interpolation string](http://lodash.com/docs#template) for custom templates.
+
+### `src/greeting.html`
+
+```html
+<h1>Hello {{ name }}</h1>
+```
+
+### `gulpfile.js`
+
+```js
+const gulp = require('gulp');
+const template = require('gulp-template');
+const data = require('gulp-data');
+
+gulp.task('default', () =>
+	gulp.src('src/greeting.html')
+		.pipe(data(() => ({name: 'Sindre'})))
+		.pipe(template(null, {
+			interpolate: /{{([\s\S]+?)}}/g
+		}))
+		.pipe(gulp.dest('dist'))
+);
+```
+
+### `dist/greeting.html`
+
+```html
+<h1>Hello Sindre</h1>
+```
+
 
 ## API
 
