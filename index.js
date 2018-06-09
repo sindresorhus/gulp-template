@@ -1,34 +1,19 @@
-'use strict';
-const PluginError = require('plugin-error');
-const through = require('through2');
-const _ = require('lodash');
-const Buffer = require('safe-buffer').Buffer;
-
-const template = _.template;
+import {Buffer} from 'node:buffer';
+import _ from 'lodash';
+import {gulpPlugin} from 'gulp-plugin-extras';
 
 function compile(options, data, render) {
-	return through.obj(function (file, enc, cb) {
-		if (file.isNull()) {
-			cb(null, file);
-			return;
-		}
-
-		if (file.isStream()) {
-			cb(new PluginError('gulp-template', 'Streaming not supported'));
-			return;
-		}
-
-		try {
-			const tpl = template(file.contents.toString(), options);
-			file.contents = Buffer.from(render ? tpl(_.merge({}, file.data, data)) : tpl.toString());
-			this.push(file);
-		} catch (err) {
-			this.emit('error', new PluginError('gulp-template', err, {fileName: file.path}));
-		}
-
-		cb();
+	return gulpPlugin('gulp-template', file => {
+		const template = _.template(file.contents.toString(), options);
+		file.contents = Buffer.from(render ? template(_.merge({}, file.data, data)) : template.toString());
+		return file;
 	});
 }
 
-module.exports = (data, options) => compile(options, data, true);
-module.exports.precompile = options => compile(options);
+export default function gulpTemplate(data, options) {
+	return compile(options, data, true);
+}
+
+export function precompile(options) {
+	return compile(options);
+}
