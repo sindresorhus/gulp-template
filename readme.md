@@ -1,6 +1,6 @@
 # gulp-template [![Build Status](https://travis-ci.org/sindresorhus/gulp-template.svg?branch=master)](https://travis-ci.org/sindresorhus/gulp-template)
 
-> Render/precompile [Lodash/Underscore templates](http://lodash.com/docs#template)
+> Render/precompile [Lodash/Underscore templates](https://lodash.com/docs#template)
 
 *Issues with the output should be reported on the Lodash [issue tracker](https://github.com/lodash/lodash/issues).*
 
@@ -54,7 +54,33 @@ gulp.task('default', () =>
 <h1>Hello Sindre</h1>
 ```
 
-You can also provide your own [interpolation string](http://lodash.com/docs#template) for custom templates.
+
+## API
+
+### template(data, [options])
+
+Render a template using the provided `data`.
+
+### template.precompile([options])
+
+Precompile a template for rendering dynamically at a later time.
+
+#### data
+
+Type: `Object`
+
+Data object used to populate the text.
+
+#### options
+
+Type: `Object`
+
+[Lodash `_.template` options](https://lodash.com/docs#template).
+
+
+## Tip
+
+You can also provide your own [interpolation string](https://lodash.com/docs#template) for custom templates.
 
 ### `src/greeting.html`
 
@@ -84,29 +110,6 @@ gulp.task('default', () =>
 ```html
 <h1>Hello Sindre</h1>
 ```
-
-
-## API
-
-### template(data, [options])
-
-Render a template using the provided `data`.
-
-### template.precompile([options])
-
-Precompile a template for rendering dynamically at a later time.
-
-#### data
-
-Type: `Object`
-
-Data object used to populate the text.
-
-#### options
-
-Type: `Object`
-
-[Lodash `_.template` options](http://lodash.com/docs#template).
 
 
 ## Related
