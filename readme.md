@@ -99,7 +99,7 @@ gulp.task('default', () =>
 	gulp.src('src/greeting.html')
 		.pipe(data(() => ({name: 'Sindre'})))
 		.pipe(template(null, {
-			interpolate: /{{([\s\S]+?)}}/g
+			interpolate: /{{(.+?)}}/gs
 		}))
 		.pipe(gulp.dest('dist'))
 );

@@ -2,31 +2,28 @@
 const PluginError = require('plugin-error');
 const through = require('through2');
 const _ = require('lodash');
-const Buffer = require('safe-buffer').Buffer;
-
-const template = _.template;
 
 function compile(options, data, render) {
-	return through.obj(function (file, enc, cb) {
+	return through.obj(function (file, encoding, callback) {
 		if (file.isNull()) {
-			cb(null, file);
+			callback(null, file);
 			return;
 		}
 
 		if (file.isStream()) {
-			cb(new PluginError('gulp-template', 'Streaming not supported'));
+			callback(new PluginError('gulp-template', 'Streaming not supported'));
 			return;
 		}
 
 		try {
-			const tpl = template(file.contents.toString(), options);
+			const tpl = _.template(file.contents.toString(), options);
 			file.contents = Buffer.from(render ? tpl(_.merge({}, file.data, data)) : tpl.toString());
 			this.push(file);
-		} catch (err) {
-			this.emit('error', new PluginError('gulp-template', err, {fileName: file.path}));
+		} catch (error) {
+			this.emit('error', new PluginError('gulp-template', error, {fileName: file.path}));
 		}
 
-		cb();
+		callback();
 	});
 }
 
