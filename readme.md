@@ -1,6 +1,6 @@
 # gulp-template [![Build Status](https://travis-ci.org/sindresorhus/gulp-template.svg?branch=master)](https://travis-ci.org/sindresorhus/gulp-template)
 
-> Render/precompile [Lodash/Underscore templates](http://lodash.com/docs#template)
+> Render/precompile [Lodash/Underscore templates](https://lodash.com/docs#template)
 
 *Issues with the output should be reported on the Lodash [issue tracker](https://github.com/lodash/lodash/issues).*
 
@@ -75,7 +75,41 @@ Data object used to populate the text.
 
 Type: `Object`
 
-[Lodash `_.template` options](http://lodash.com/docs#template).
+[Lodash `_.template` options](https://lodash.com/docs#template).
+
+
+## Tip
+
+You can also provide your own [interpolation string](https://lodash.com/docs#template) for custom templates.
+
+### `src/greeting.html`
+
+```html
+<h1>Hello {{ name }}</h1>
+```
+
+### `gulpfile.js`
+
+```js
+const gulp = require('gulp');
+const template = require('gulp-template');
+const data = require('gulp-data');
+
+gulp.task('default', () =>
+	gulp.src('src/greeting.html')
+		.pipe(data(() => ({name: 'Sindre'})))
+		.pipe(template(null, {
+			interpolate: /{{([\s\S]+?)}}/g
+		}))
+		.pipe(gulp.dest('dist'))
+);
+```
+
+### `dist/greeting.html`
+
+```html
+<h1>Hello Sindre</h1>
+```
 
 
 ## Related
