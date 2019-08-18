@@ -10,7 +10,7 @@
 		"url": "sindresorhus.com"
 	},
 	"engines": {
-		"node": ">=6"
+		"node": ">=8"
 	},
 	"scripts": {
 		"test": "xo && mocha test.js"
@@ -39,5 +39,8 @@
 		"mocha": "^6.0.0",
 		"vinyl": "^2.2.0",
 		"xo": "^0.24.0"
+	},
+	"peerDependencies": {
+		"gulp": ">=4"
 	}
 }

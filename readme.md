@@ -26,7 +26,7 @@ $ npm install --save-dev gulp-template
 const gulp = require('gulp');
 const template = require('gulp-template');
 
-gulp.task('default', () =>
+exports.default = () => (
 	gulp.src('src/greeting.html')
 		.pipe(template({name: 'Sindre'}))
 		.pipe(gulp.dest('dist'))
@@ -40,7 +40,7 @@ const gulp = require('gulp');
 const template = require('gulp-template');
 const data = require('gulp-data');
 
-gulp.task('default', () =>
+exports.default = () => (
 	gulp.src('src/greeting.html')
 		.pipe(data(() => ({name: 'Sindre'})))
 		.pipe(template())
@@ -57,23 +57,23 @@ gulp.task('default', () =>
 
 ## API
 
-### template(data, [options])
+### template(data, options?)
 
 Render a template using the provided `data`.
 
-### template.precompile([options])
+### template.precompile(options?)
 
 Precompile a template for rendering dynamically at a later time.
 
 #### data
 
-Type: `Object`
+Type: `object`
 
 Data object used to populate the text.
 
 #### options
 
-Type: `Object`
+Type: `object`
 
 [Lodash `_.template` options](https://lodash.com/docs#template).
 
@@ -95,7 +95,7 @@ const gulp = require('gulp');
 const template = require('gulp-template');
 const data = require('gulp-data');
 
-gulp.task('default', () =>
+exports.default = () => (
 	gulp.src('src/greeting.html')
 		.pipe(data(() => ({name: 'Sindre'})))
 		.pipe(template(null, {
@@ -115,8 +115,3 @@ gulp.task('default', () =>
 ## Related
 
 - [grunt-template](https://github.com/mathiasbynens/grunt-template) - Grunt version
-
-
-## License
-
-MIT © [Sindre Sorhus](https://sindresorhus.com)

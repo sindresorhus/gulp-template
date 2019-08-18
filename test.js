@@ -5,14 +5,14 @@ const Vinyl = require('vinyl');
 const data = require('gulp-data');
 const template = require('.');
 
-it('should compile Lodash templates', cb => {
+it('should compile Lodash templates', callback => {
 	const stream = template({people: ['foo', 'bar']});
 
 	stream.on('data', data => {
 		assert.equal(data.contents.toString(), '<li>foo</li><li>bar</li>');
 	});
 
-	stream.on('end', cb);
+	stream.on('end', callback);
 
 	stream.write(new Vinyl({
 		contents: Buffer.from('<% _.forEach(people, function (name) { %><li><%- name %></li><% }); %>')
@@ -21,7 +21,7 @@ it('should compile Lodash templates', cb => {
 	stream.end();
 });
 
-it('should support data via gulp-data', cb => {
+it('should support data via gulp-data', callback => {
 	const dl = [];
 
 	const stream = data(file => {
@@ -39,7 +39,7 @@ it('should support data via gulp-data', cb => {
 	stream.on('end', () => {
 		const expected = '<dt>path</dt><dd>bar.txt</dd><dt>path</dt><dd>foo.txt</dd>';
 		assert.equal(dl.sort().join(''), expected);
-		cb();
+		callback();
 	});
 
 	stream.write(new Vinyl({
@@ -55,7 +55,7 @@ it('should support data via gulp-data', cb => {
 	stream.end();
 });
 
-it('should support Lo-Dash options with gulp-data', cb => {
+it('should support Lo-Dash options with gulp-data', callback => {
 	const options = {
 		variable: 'data',
 		imports: {
@@ -80,7 +80,7 @@ it('should support Lo-Dash options with gulp-data', cb => {
 	stream.on('end', () => {
 		const expected = '<dt>path</dt><dd>bar.txt</dd><dt>path</dt><dd>foo.txt</dd>';
 		assert.equal(dl.sort().join(''), expected);
-		cb();
+		callback();
 	});
 
 	stream.write(new Vinyl({
@@ -96,7 +96,7 @@ it('should support Lo-Dash options with gulp-data', cb => {
 	stream.end();
 });
 
-it('should merge gulp-data and data parameter', cb => {
+it('should merge gulp-data and data parameter', callback => {
 	const stream = data(() => {
 		return {
 			people: ['foo', 'bar'],
@@ -119,7 +119,7 @@ it('should merge gulp-data and data parameter', cb => {
 		assert.equal(data.contents.toString(), '<h1>people</h1><li>foo</li><li>bar</li>three,two,four');
 	});
 
-	stream.on('end', cb);
+	stream.on('end', callback);
 
 	stream.write(new Vinyl({
 		contents: Buffer.from('<h1><%= heading %></h1><% _.forEach(people, function (name) { %><li><%- name %></li><% }); %><%= nested.a %>,<%= nested.b %>,<%= nested.c %>')
@@ -128,7 +128,7 @@ it('should merge gulp-data and data parameter', cb => {
 	stream.end();
 });
 
-it('should not alter gulp-data or data parameter', cb => {
+it('should not alter gulp-data or data parameter', callback => {
 	const chunks = [];
 
 	const stream = data(file => {
@@ -156,7 +156,7 @@ it('should not alter gulp-data or data parameter', cb => {
 			bar: 'bar',
 			foobar: ['foo', 'bar']
 		});
-		cb();
+		callback();
 	});
 
 	stream.write(new Vinyl({
@@ -166,14 +166,14 @@ it('should not alter gulp-data or data parameter', cb => {
 	stream.end();
 });
 
-it('should work with no data supplied', cb => {
+it('should work with no data supplied', callback => {
 	const stream = template();
 
 	stream.on('data', data => {
 		assert.equal(data.contents.toString(), '');
 	});
 
-	stream.on('end', cb);
+	stream.on('end', callback);
 
 	stream.write(new Vinyl({
 		contents: Buffer.from('')
@@ -182,14 +182,14 @@ it('should work with no data supplied', cb => {
 	stream.end();
 });
 
-it('should precompile Lodash templates', cb => {
+it('should precompile Lodash templates', callback => {
 	const stream = template.precompile();
 
 	stream.on('data', data => {
 		assert.ok(data.contents.toString().includes('function'));
 	});
 
-	stream.on('end', cb);
+	stream.on('end', callback);
 
 	stream.write(new Vinyl({
 		contents: Buffer.from('<h1><%= heading %></h1>')
@@ -198,7 +198,7 @@ it('should precompile Lodash templates', cb => {
 	stream.end();
 });
 
-it('should support Lo-Dash options when precompiling', cb => {
+it('should support Lo-Dash options when precompiling', callback => {
 	const options = {
 		variable: 'data'
 	};
@@ -209,7 +209,7 @@ it('should support Lo-Dash options when precompiling', cb => {
 		assert.ok(data.contents.toString().includes('function'));
 	});
 
-	stream.on('end', cb);
+	stream.on('end', callback);
 
 	stream.write(new Vinyl({
 		contents: Buffer.from('<h1><%= heading %></h1>')
