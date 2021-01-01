@@ -1,4 +1,4 @@
-# gulp-template [![Build Status](https://travis-ci.org/sindresorhus/gulp-template.svg?branch=master)](https://travis-ci.org/sindresorhus/gulp-template)
+# gulp-template
 
 > Render/precompile [Lodash/Underscore templates](https://lodash.com/docs#template)
 
