@@ -1,6 +1,6 @@
 {
 	"name": "gulp-template",
-	"version": "5.0.0",
+	"version": "6.0.0",
 	"description": "Render/precompile Lodash/Underscore templates",
 	"license": "MIT",
 	"repository": "sindresorhus/gulp-template",
