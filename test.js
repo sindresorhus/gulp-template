@@ -103,3 +103,39 @@ test('should support Lo-Dash options when precompiling', async t => {
 	const data = await promise;
 	t.true(data.contents.toString().includes('function'));
 });
+
+test('should provide helpful error message on template syntax error', async t => {
+	const stream = gulpTemplate({amount: 100});
+	const testFile = new Vinyl({
+		path: '/test/template.html',
+		// eslint-disable-next-line no-useless-concat
+		contents: Buffer.from('Price: $' + '{{amount}}'),
+	});
+
+	const error = await t.throwsAsync(async () => {
+		stream.write(testFile);
+		stream.end();
+		await stream.toArray();
+	});
+
+	t.true(error.message.includes('/test/template.html'));
+	t.is(error.fileName, '/test/template.html');
+});
+
+test('should handle syntax errors with file context', async t => {
+	const stream = gulpTemplate({});
+	const testFile = new Vinyl({
+		path: '/test/broken.html',
+		contents: Buffer.from('<% if (true { %>'),
+	});
+
+	const error = await t.throwsAsync(async () => {
+		stream.write(testFile);
+		stream.end();
+		await stream.toArray();
+	});
+
+	t.true(error.message.includes('/test/broken.html'));
+	t.is(error.fileName, '/test/broken.html');
+});
+
