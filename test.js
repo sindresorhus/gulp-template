@@ -139,3 +139,37 @@ test('should handle syntax errors with file context', async t => {
 	t.is(error.fileName, '/test/broken.html');
 });
 
+test('should handle bash parameter expansion with interpolate disabled', async t => {
+	// Test case for GitHub issue #45 - bash syntax like ${VAR:-default}
+	const stream = gulpTemplate({}, {interpolate: false});
+	// eslint-disable-next-line no-template-curly-in-string
+	const bashContent = 'export PATH=${PATH:-/usr/bin}\necho ${USER:-nobody}';
+	const testFile = new Vinyl({
+		path: '/test/script.sh',
+		contents: Buffer.from(bashContent),
+	});
+
+	stream.write(testFile);
+	stream.end();
+
+	const [result] = await stream.toArray();
+	t.is(result.contents.toString(), bashContent);
+});
+
+test('should fail on bash parameter expansion without interpolate disabled', async t => {
+	const stream = gulpTemplate({});
+	const testFile = new Vinyl({
+		path: '/test/script.sh',
+		// eslint-disable-next-line no-template-curly-in-string
+		contents: Buffer.from('export PATH=${PATH:-/usr/bin}'),
+	});
+
+	const error = await t.throwsAsync(async () => {
+		stream.write(testFile);
+		stream.end();
+		await stream.toArray();
+	});
+
+	t.true(error.message.includes('/test/script.sh'));
+	t.is(error.fileName, '/test/script.sh');
+});

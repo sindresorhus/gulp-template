@@ -106,3 +106,11 @@ export default () => (
 ```html
 <h1>Hello Sindre</h1>
 ```
+
+## Tip
+
+If you need to pass through a file unprocessed (for example, a shell script with `${VAR}` syntax), you can disable interpolation:
+
+```js
+.pipe(template(data, {interpolate: false}))
+```
